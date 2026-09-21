@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "a.control-center",
+  "id": "aryal.control-center",
   "name": "Control center",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "author": "404Prabhat",
   "description": "Quick-settings hub: Wi-Fi, Bluetooth, night light, and quick actions in one popup",
   "kinds": [

@@ -20,8 +20,8 @@ import "Model.js" as Model
 //   execution  execDetached for command write-back and panel summoning
 Panel {
   id: root
-  moduleName: "a.control-center"
-  ipcTarget: "a.control-center"
+  moduleName: "aryal.control-center"
+  ipcTarget: "aryal.control-center"
 
   readonly property bool wifiOn: Networking.wifiEnabled
   readonly property bool btOn: !!(Bluetooth.defaultAdapter && Bluetooth.defaultAdapter.enabled)

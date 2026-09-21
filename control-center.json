@@ -132,7 +132,7 @@
   {
     "id": "dark-mode",
     "slot": "dark-mode",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "Dark Mode",
     "glyph": "\uf05e",
     "kind": "toggle",
@@ -361,7 +361,7 @@
   {
     "id": "screenshot",
     "slot": "screenshot",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "Screenshot",
     "glyph": "\uf030",
     "kind": "action",
@@ -379,7 +379,7 @@
   {
     "id": "screen-record",
     "slot": "screen-record",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "Screen record",
     "glyph": "\uf03d",
     "kind": "toggle",
@@ -488,7 +488,7 @@
   {
     "id": "terminal",
     "slot": "terminal",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "Terminal",
     "glyph": "\uf120",
     "kind": "action",
@@ -503,7 +503,7 @@
   {
     "id": "files",
     "slot": "files",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "Files",
     "glyph": "\uf07b",
     "kind": "action",
@@ -518,7 +518,7 @@
   {
     "id": "monitor",
     "slot": "monitor",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "System monitor",
     "glyph": "\uf26c",
     "kind": "action",
@@ -534,7 +534,7 @@
   {
     "id": "settings",
     "slot": "settings",
-    "providerId": "a.control-center",
+    "providerId": "aryal.control-center",
     "title": "Settings",
     "glyph": "\uf013",
     "kind": "action",

@@ -47,7 +47,7 @@ PanelWindow {
     }
   }
 
-  WlrLayershell.namespace: "a-control-center-edges"
+  WlrLayershell.namespace: "aryal-control-center-edges"
   WlrLayershell.layer: WlrLayer.Overlay
   WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 

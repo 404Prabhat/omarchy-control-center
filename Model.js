@@ -153,7 +153,7 @@ function normalizeCap(c, defaults) {
   var providerDefaults = defaults || {}
   c.slot = String(c.slot || c.id || "")
   c.providerId = String(
-    c.providerId || providerDefaults.providerId || "a.control-center"
+    c.providerId || providerDefaults.providerId || "aryal.control-center"
   )
   c.tier = isFinite(Number(c.tier)) ? Number(c.tier) : (TIER[c.id] || 3)
   return c
@@ -309,7 +309,7 @@ function availableForAdd(caps, orderIds) {
 // other enabled bar-widget plugin (first-party or third-party) becomes an
 // addable tile so its panel can be summoned from the grid.
 var AUTO_EXCLUDE = {
-  "a.control-center": true
+  "aryal.control-center": true
 }
 
 // Category fallback glyphs for generic-tier (manifest-only) launcher tiles
@@ -353,7 +353,7 @@ var PLUGIN_GLYPHS = {
   "akitaonrails.ai-usagebar": "\uF201",
   "io.github.infiniv.dori": "\uF4AD",
   "tripleu.tor": "\uF0E0",
-  "a.control-center": "\uF00A"
+  "aryal.control-center": "\uF00A"
 }
 
 // ---- Plugin manager (add-tiles) helpers ----
@@ -363,7 +363,7 @@ var PLUGIN_GLYPHS = {
 // the user's own icons applied as a contiguous sequence over its tiles).
 
 var PROVIDER_LABELS = {
-  "a.control-center": "Core controls",
+  "aryal.control-center": "Core controls",
   "omarchy.network": "Network",
   "omarchy.bluetooth": "Bluetooth",
   "omarchy.audio": "Audio",
@@ -390,7 +390,7 @@ var PROVIDER_LABELS = {
 // other provider folder is third-party.
 function partyOf(providerId) {
   var id = String(providerId || "")
-  if (id.indexOf("omarchy.") === 0 || id === "a.control-center") return "first"
+  if (id.indexOf("omarchy.") === 0 || id === "aryal.control-center") return "first"
   return "third"
 }
 
@@ -420,7 +420,7 @@ function pluginGroups(caps, orderIds) {
   for (var j = 0; j < caps.length; j++) {
     var c = caps[j]
     if (!isGriddableCap(c)) continue
-    var pid = String(c.providerId || "a.control-center")
+    var pid = String(c.providerId || "aryal.control-center")
     if (!groups[pid]) groups[pid] = []
     c.onGrid = !!orderSet[c.id]
     groups[pid].push(c)

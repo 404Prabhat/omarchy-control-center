@@ -13,8 +13,8 @@ omarchy plugin add https://github.com/404Prabhat/omarchy-control-center.git --en
 ## Update / Remove
 
 ```bash
-omarchy plugin update a.control-center
-omarchy plugin remove a.control-center
+omarchy plugin update aryal.control-center
+omarchy plugin remove aryal.control-center
 ```
 
 ## Use
@@ -22,7 +22,7 @@ omarchy plugin remove a.control-center
 Hover the top-left corner, or run:
 
 ```bash
-omarchy-shell shell toggle a.control-center
+omarchy-shell shell toggle aryal.control-center
 ```
 
 Left-click opens a panel, right-click toggles. Edit mode rearranges the grid.
