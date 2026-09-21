@@ -1,0 +1,582 @@
+[
+  {
+    "id": "wifi",
+    "slot": "wifi",
+    "providerId": "omarchy.network",
+    "title": "Wi-Fi",
+    "glyph": "\uf1eb",
+    "kind": "toggle",
+    "backend": "command",
+    "needsBin": "nmcli",
+    "read": [
+      "bash",
+      "-c",
+      "nmcli -t radio wifi | grep -q enabled && echo on || echo off"
+    ],
+    "readMode": "eq",
+    "readValue": "on",
+    "signalRead": [
+      "bash",
+      "-c",
+      "nmcli -t -f IN-USE,SIGNAL dev wifi 2>/dev/null | grep '^\\*' | cut -d: -f2"
+    ],
+    "signalMode": "number",
+    "onCommand": [
+      "nmcli",
+      "radio",
+      "wifi",
+      "on"
+    ],
+    "offCommand": [
+      "nmcli",
+      "radio",
+      "wifi",
+      "off"
+    ],
+    "detail": "omarchy.network"
+  },
+  {
+    "id": "bluetooth",
+    "slot": "bluetooth",
+    "providerId": "omarchy.bluetooth",
+    "title": "Bluetooth",
+    "glyph": "\uf294",
+    "kind": "toggle",
+    "backend": "command",
+    "needsBin": "bluetoothctl",
+    "read": [
+      "bash",
+      "-c",
+      "bluetoothctl show | grep -q 'Powered: yes' && echo on || echo off"
+    ],
+    "readMode": "eq",
+    "readValue": "on",
+    "signalRead": [
+      "bash",
+      "-c",
+      "mac=$(bluetoothctl devices Connected 2>/dev/null | head -1 | awk '{print $2}'); [ -n \"$mac\" ] && bluetoothctl info \"$mac\" 2>/dev/null | grep 'RSSI:' | grep -o '\\-[0-9]*'"
+    ],
+    "signalMode": "rssi",
+    "onCommand": [
+      "omarchy-bluetooth-power",
+      "on"
+    ],
+    "offCommand": [
+      "omarchy-bluetooth-power",
+      "off"
+    ],
+    "detail": "omarchy.bluetooth"
+  },
+  {
+    "id": "airplane",
+    "slot": "airplane",
+    "providerId": "omarchy.network",
+    "title": "Airplane",
+    "glyph": "\uf072",
+    "kind": "toggle",
+    "backend": "command",
+    "needsBin": "nmcli",
+    "read": [
+      "nmcli",
+      "-t",
+      "radio",
+      "wifi"
+    ],
+    "readMode": "eq",
+    "readValue": "disabled",
+    "onCommand": [
+      "nmcli",
+      "radio",
+      "all",
+      "off"
+    ],
+    "offCommand": [
+      "nmcli",
+      "radio",
+      "all",
+      "on"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "nightlight",
+    "slot": "nightlight",
+    "providerId": "omarchy.nightlight",
+    "title": "Night Light",
+    "glyph": "\uf186",
+    "kind": "toggle",
+    "backend": "command",
+    "read": [
+      "omarchy",
+      "toggle",
+      "nightlight",
+      "--status"
+    ],
+    "readMode": "json",
+    "readKey": "enabled",
+    "onCommand": [
+      "omarchy",
+      "toggle",
+      "nightlight",
+      "on"
+    ],
+    "offCommand": [
+      "omarchy",
+      "toggle",
+      "nightlight",
+      "off"
+    ],
+    "unit": "K",
+    "detail": ""
+  },
+  {
+    "id": "dark-mode",
+    "slot": "dark-mode",
+    "providerId": "a.control-center",
+    "title": "Dark Mode",
+    "glyph": "\uf05e",
+    "kind": "toggle",
+    "backend": "command",
+    "needsBin": "gsettings",
+    "read": [
+      "gsettings",
+      "get",
+      "org.gnome.desktop.interface",
+      "color-scheme"
+    ],
+    "readMode": "contains",
+    "readValue": "dark",
+    "onCommand": [
+      "gsettings",
+      "set",
+      "org.gnome.desktop.interface",
+      "color-scheme",
+      "prefer-dark"
+    ],
+    "offCommand": [
+      "gsettings",
+      "set",
+      "org.gnome.desktop.interface",
+      "color-scheme",
+      "prefer-light"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "dnd",
+    "slot": "dnd",
+    "providerId": "omarchy.notifications",
+    "title": "Silence",
+    "glyph": "\uf0f3",
+    "kind": "toggle",
+    "backend": "command",
+    "read": [
+      "bash",
+      "-c",
+      "if omarchy toggle enabled 'notification silencing' >/dev/null 2>&1; then echo enabled; else echo disabled; fi"
+    ],
+    "readMode": "eq",
+    "readValue": "enabled",
+    "onCommand": [
+      "omarchy",
+      "toggle",
+      "notification silencing",
+      "on"
+    ],
+    "offCommand": [
+      "omarchy",
+      "toggle",
+      "notification silencing",
+      "off"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "stay-awake",
+    "slot": "stay-awake",
+    "providerId": "omarchy.power",
+    "title": "Stay awake",
+    "glyph": "\uf0f4",
+    "kind": "toggle",
+    "backend": "command",
+    "read": [
+      "omarchy",
+      "toggle",
+      "idle",
+      "status"
+    ],
+    "readMode": "json",
+    "readKey": "enabled",
+    "onCommand": [
+      "omarchy",
+      "toggle",
+      "idle",
+      "stay-awake"
+    ],
+    "offCommand": [
+      "omarchy",
+      "toggle",
+      "idle",
+      "allow-idle"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "power-saver",
+    "slot": "power-saver",
+    "providerId": "omarchy.power",
+    "title": "Battery saver",
+    "glyph": "\uf0e7",
+    "kind": "toggle",
+    "backend": "command",
+    "needsBin": "powerprofilesctl",
+    "read": [
+      "powerprofilesctl",
+      "get"
+    ],
+    "readMode": "eq",
+    "readValue": "power-saver",
+    "onCommand": [
+      "powerprofilesctl",
+      "set",
+      "power-saver"
+    ],
+    "offCommand": [
+      "powerprofilesctl",
+      "set",
+      "performance"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "vpn",
+    "slot": "vpn",
+    "providerId": "omarchy.network",
+    "title": "VPN",
+    "glyph": "\uf0e0",
+    "kind": "toggle",
+    "backend": "command",
+    "needsConn": "vpn",
+    "nameSlotId": "vpn-conn",
+    "read": [
+      "bash",
+      "-c",
+      "nmcli -t -f NAME,TYPE con show --active 2>/dev/null | sed -n 's/:vpn$//p' | head -1"
+    ],
+    "readMode": "nonempty",
+    "onCommand": [
+      "nmcli",
+      "connection",
+      "up",
+      "id",
+      "{name}"
+    ],
+    "offCommand": [
+      "nmcli",
+      "connection",
+      "down",
+      "id",
+      "{name}"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "vpn-conn",
+    "slot": "vpn-conn",
+    "providerId": "omarchy.network",
+    "title": "VPN connection",
+    "glyph": "\uf0e0",
+    "kind": "hidden",
+    "backend": "command",
+    "read": [
+      "bash",
+      "-c",
+      "nmcli -t -f NAME,TYPE con show --active 2>/dev/null | sed -n 's/:vpn$//p' | head -1"
+    ],
+    "readMode": "raw",
+    "detail": ""
+  },
+  {
+    "id": "volume",
+    "slot": "volume",
+    "providerId": "omarchy.audio",
+    "title": "Volume",
+    "glyph": "\uf028",
+    "kind": "slider",
+    "backend": "pipewire",
+    "min": 0,
+    "max": 1,
+    "step": 0.02,
+    "unit": "%",
+    "detail": "omarchy.audio",
+    "mutedCapId": "volume-mute",
+    "secondaryCapId": "volume-mute"
+  },
+  {
+    "id": "volume-mute",
+    "slot": "volume-mute",
+    "providerId": "omarchy.audio",
+    "title": "Mute",
+    "glyph": "\uf026",
+    "kind": "command-mute",
+    "backend": "pipewire-mute",
+    "detail": ""
+  },
+  {
+    "id": "mic-mute",
+    "slot": "mic-mute",
+    "providerId": "omarchy.microphone",
+    "title": "Microphone",
+    "glyph": "\uf131",
+    "kind": "toggle",
+    "backend": "pipewire-source-mute",
+    "detail": "",
+    "titleOff": "Microphone on"
+  },
+  {
+    "id": "brightness",
+    "slot": "brightness",
+    "providerId": "omarchy.monitor",
+    "title": "Brightness",
+    "glyph": "\uf185",
+    "kind": "slider",
+    "backend": "command",
+    "read": [
+      "bash",
+      "-c",
+      "brightnessctl -m 2>/dev/null | head -1"
+    ],
+    "readMode": "percent",
+    "readKey": "percent",
+    "applyCommand": [
+      "brightnessctl",
+      "set",
+      "{v}%"
+    ],
+    "min": 0,
+    "max": 100,
+    "unit": "%",
+    "detail": "omarchy.monitor"
+  },
+  {
+    "id": "screenshot",
+    "slot": "screenshot",
+    "providerId": "a.control-center",
+    "title": "Screenshot",
+    "glyph": "\uf030",
+    "kind": "action",
+    "backend": "none",
+    "sublabel": "Region",
+    "runCommand": [
+      "omarchy",
+      "capture",
+      "screenshot",
+      "region",
+      "save"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "screen-record",
+    "slot": "screen-record",
+    "providerId": "a.control-center",
+    "title": "Screen record",
+    "glyph": "\uf03d",
+    "kind": "toggle",
+    "backend": "command",
+    "needsAnyBin": [
+      "wl-screenrec",
+      "wf-recorder"
+    ],
+    "read": [
+      "bash",
+      "-c",
+      "pgrep -x wl-screenrec >/dev/null 2>&1 && echo running || pgrep -x wf-recorder >/dev/null 2>&1 && echo running || echo idle"
+    ],
+    "readMode": "eq",
+    "readValue": "running",
+    "onCommand": [
+      "omarchy",
+      "capture",
+      "screenrecording",
+      "--fullscreen"
+    ],
+    "offCommand": [
+      "omarchy",
+      "capture",
+      "screenrecording",
+      "--stop-recording"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "lock",
+    "slot": "lock",
+    "providerId": "omarchy.power",
+    "title": "Lock",
+    "glyph": "\uf023",
+    "kind": "action",
+    "backend": "none",
+    "sublabel": "Screen",
+    "runCommand": [
+      "omarchy",
+      "system",
+      "lock"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "suspend",
+    "slot": "suspend",
+    "providerId": "omarchy.power",
+    "title": "Suspend",
+    "glyph": "\uf236",
+    "kind": "action",
+    "backend": "none",
+    "runCommand": [
+      "systemctl",
+      "suspend"
+    ],
+    "sublabel": "Standby",
+    "confirm": "Put the computer to sleep?"
+  },
+  {
+    "id": "logout",
+    "slot": "logout",
+    "providerId": "omarchy.power",
+    "title": "Log out",
+    "glyph": "\uf2f5",
+    "kind": "action",
+    "backend": "none",
+    "runCommand": [
+      "omarchy",
+      "system",
+      "logout"
+    ],
+    "confirm": "Log out of this session?"
+  },
+  {
+    "id": "reboot",
+    "slot": "reboot",
+    "providerId": "omarchy.power",
+    "title": "Restart",
+    "glyph": "\uf2f1",
+    "kind": "action",
+    "backend": "none",
+    "runCommand": [
+      "omarchy",
+      "system",
+      "reboot"
+    ],
+    "confirm": "Restart the computer?"
+  },
+  {
+    "id": "poweroff",
+    "slot": "poweroff",
+    "providerId": "omarchy.power",
+    "title": "Power off",
+    "glyph": "\uf011",
+    "kind": "action",
+    "backend": "none",
+    "runCommand": [
+      "omarchy",
+      "system",
+      "shutdown"
+    ],
+    "confirm": "Shut down the computer?"
+  },
+  {
+    "id": "terminal",
+    "slot": "terminal",
+    "providerId": "a.control-center",
+    "title": "Terminal",
+    "glyph": "\uf120",
+    "kind": "action",
+    "backend": "none",
+    "needsBin": "foot",
+    "runCommand": [
+      "foot"
+    ],
+    "sublabel": "Terminal",
+    "detail": ""
+  },
+  {
+    "id": "files",
+    "slot": "files",
+    "providerId": "a.control-center",
+    "title": "Files",
+    "glyph": "\uf07b",
+    "kind": "action",
+    "backend": "none",
+    "needsBin": "nautilus",
+    "runCommand": [
+      "nautilus"
+    ],
+    "sublabel": "Files",
+    "detail": ""
+  },
+  {
+    "id": "monitor",
+    "slot": "monitor",
+    "providerId": "a.control-center",
+    "title": "System monitor",
+    "glyph": "\uf26c",
+    "kind": "action",
+    "backend": "none",
+    "needsBin": "btop",
+    "runCommand": [
+      "foot",
+      "btop"
+    ],
+    "sublabel": "Monitor",
+    "detail": ""
+  },
+  {
+    "id": "settings",
+    "slot": "settings",
+    "providerId": "a.control-center",
+    "title": "Settings",
+    "glyph": "\uf013",
+    "kind": "action",
+    "backend": "none",
+    "needsAnyBin": [
+      "gnome-control-center",
+      "systemsettings",
+      "xfce4-settings-manager"
+    ],
+    "runCommand": [
+      "bash",
+      "-c",
+      "gnome-control-center 2>/dev/null || systemsettings 2>/dev/null || xfce4-settings-manager 2>/dev/null"
+    ],
+    "detail": ""
+  },
+  {
+    "id": "tor",
+    "slot": "tor",
+    "providerId": "tripleu.tor",
+    "title": "Tor",
+    "glyph": "\uf2f0",
+    "kind": "toggle",
+    "backend": "command",
+    "needsBin": "tormarchy",
+    "read": [
+      "bash",
+      "-c",
+      "tormarchy status --json 2>/dev/null | python3 -c 'import json, sys; s = json.load(sys.stdin); print(\"on\" if s.get(\"torRunning\") and (s.get(\"mode\") == \"socks\" or s.get(\"connected\")) else \"off\")' 2>/dev/null || echo off"
+    ],
+    "readMode": "eq",
+    "readValue": "on",
+    "onCommand": [
+      "bash",
+      "-c",
+      "mode=$(tormarchy status --json 2>/dev/null | python3 -c 'import json, sys; print(json.load(sys.stdin).get(\"mode\") or \"lan\")' 2>/dev/null); exec tormarchy connect \"${mode:-lan}\""
+    ],
+    "offCommand": [
+      "tormarchy",
+      "disconnect"
+    ],
+    "detail": "tripleu.tor",
+    "sublabel": "Tor"
+  }
+]

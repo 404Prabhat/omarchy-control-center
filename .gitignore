@@ -1,0 +1,10 @@
+# Local development, verification, and release-submission materials stay out
+# of the distributable marketplace repository.
+.superdesign/
+tests/
+release-check.sh
+CHANGELOG.md
+CONTRIBUTING.md
+MARKETPLACE-SUBMISSION.md
+PUBLISHING.md
+SECURITY.md
