@@ -15,6 +15,24 @@
     "displayName": "Control center",
     "description": "Quick-settings hub that hosts toggles and can summon the other Omarchy panels",
     "category": "System",
-    "allowMultiple": false
+    "allowMultiple": false,
+    "defaults": {
+      "hoverCorners": "Both"
+    },
+    "schema": [
+      {
+        "key": "hoverCorners",
+        "type": "enum",
+        "label": "Hover corners",
+        "options": [
+          "Both",
+          "Top-left only",
+          "Top-right only",
+          "Off"
+        ],
+        "defaultValue": "Both",
+        "description": "Top-left opens Control Center, top-right opens notification history. Each corner takes a 12 px square of input at the top of every screen, so clicks there do not reach the window underneath (for example the close button of a maximized window). Turn a corner off to click through it."
+      }
+    ]
   }
 }

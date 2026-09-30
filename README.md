@@ -19,13 +19,19 @@ omarchy plugin remove aryal.control-center
 
 ## Use
 
-Hover the top-left corner, or run:
+Hover the top-left corner (the top-right one opens notification history), or run:
 
 ```bash
 omarchy-shell shell toggle aryal.control-center
 ```
 
 Left-click opens a panel, right-click toggles. Edit mode rearranges the grid.
+
+The hover corners take clicks in a 12 px square at the top corners of each screen. To click through a corner (for example a maximized window's close button), set `hoverCorners` on the widget's bar entry in `~/.config/omarchy/shell.json` to `"Top-left only"`, `"Top-right only"`, or `"Off"` (default `"Both"`):
+
+```json
+{ "id": "aryal.control-center", "hoverCorners": "Off" }
+```
 
 ## What you get
 

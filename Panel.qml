@@ -2061,9 +2061,16 @@ Panel {
     }
   }
 
-  // Corner hover summon zones, one EdgeSummon layer per screen.
+  // Corner hover summon zones, one EdgeSummon layer per screen. The
+  // hoverCorners bar setting turns either corner off; with both off no layer
+  // is created at all.
+  readonly property string hoverCorners: root.settings && typeof root.settings.hoverCorners === "string"
+    ? root.settings.hoverCorners : "Both"
+  readonly property bool leftCornerEnabled: root.hoverCorners === "Both" || root.hoverCorners === "Top-left only"
+  readonly property bool rightCornerEnabled: root.hoverCorners === "Both" || root.hoverCorners === "Top-right only"
   readonly property var edgeScreens: {
     var out = []
+    if (!root.leftCornerEnabled && !root.rightCornerEnabled) return out
     var s = Quickshell.screens
     if (s) for (var i = 0; i < s.length; i++) out.push(s[i])
     return out
@@ -2074,6 +2081,8 @@ Panel {
       required property var modelData
       targetScreen: modelData
       owner: root
+      leftEnabled: root.leftCornerEnabled
+      rightEnabled: root.rightCornerEnabled
     }
   }
 
