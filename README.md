@@ -36,7 +36,7 @@ Left-click opens a panel, right-click toggles. Edit mode rearranges the grid.
 
 ## Needs
 
-Omarchy + Quickshell, JetBrainsMono Nerd Font. Optional: `nmcli`, `bluetoothctl`, `gsettings`, `brightnessctl`, `powerprofilesctl`, `foot`, `nautilus`, `btop`, `gnome-control-center` (or `systemsettings` / `xfce4-settings-manager`), `wl-screenrec` / `wf-recorder`, `tormarchy`.
+Omarchy + Quickshell, JetBrainsMono Nerd Font. Optional: `nmcli`, `bluetoothctl`, `gsettings`, `brightnessctl`, `powerprofilesctl`, `btop`, `wl-screenrec` / `wf-recorder`, `tormarchy`. The Terminal, Files, System monitor, and Settings tiles open your Omarchy defaults (`omarchy-launch-terminal`, `xdg-open ~`, `omarchy-launch-tui btop`, the Omarchy menu) and fall back to `xdg-terminal-exec` / `foot`, `nautilus`, and `gnome-control-center` (or `systemsettings` / `xfce4-settings-manager`).
 
 Runs locally as your user, no telemetry.
 

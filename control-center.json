@@ -493,9 +493,15 @@
     "glyph": "\uf120",
     "kind": "action",
     "backend": "none",
-    "needsBin": "foot",
-    "runCommand": [
+    "needsAnyBin": [
+      "omarchy-launch-terminal",
+      "xdg-terminal-exec",
       "foot"
+    ],
+    "runCommand": [
+      "bash",
+      "-c",
+      "if command -v omarchy-launch-terminal >/dev/null 2>&1; then exec omarchy-launch-terminal; elif command -v xdg-terminal-exec >/dev/null 2>&1; then exec xdg-terminal-exec; else exec foot; fi"
     ],
     "sublabel": "Terminal",
     "detail": ""
@@ -508,9 +514,14 @@
     "glyph": "\uf07b",
     "kind": "action",
     "backend": "none",
-    "needsBin": "nautilus",
-    "runCommand": [
+    "needsAnyBin": [
+      "xdg-open",
       "nautilus"
+    ],
+    "runCommand": [
+      "bash",
+      "-c",
+      "if command -v xdg-open >/dev/null 2>&1; then exec xdg-open \"$HOME\"; else exec nautilus; fi"
     ],
     "sublabel": "Files",
     "detail": ""
@@ -524,9 +535,15 @@
     "kind": "action",
     "backend": "none",
     "needsBin": "btop",
+    "needsAnyBin": [
+      "omarchy-launch-tui",
+      "xdg-terminal-exec",
+      "foot"
+    ],
     "runCommand": [
-      "foot",
-      "btop"
+      "bash",
+      "-c",
+      "if command -v omarchy-launch-tui >/dev/null 2>&1; then exec omarchy-launch-tui btop; elif command -v xdg-terminal-exec >/dev/null 2>&1; then exec xdg-terminal-exec btop; else exec foot btop; fi"
     ],
     "sublabel": "Monitor",
     "detail": ""
@@ -540,6 +557,7 @@
     "kind": "action",
     "backend": "none",
     "needsAnyBin": [
+      "omarchy-menu",
       "gnome-control-center",
       "systemsettings",
       "xfce4-settings-manager"
@@ -547,7 +565,7 @@
     "runCommand": [
       "bash",
       "-c",
-      "gnome-control-center 2>/dev/null || systemsettings 2>/dev/null || xfce4-settings-manager 2>/dev/null"
+      "if command -v omarchy-menu >/dev/null 2>&1; then exec omarchy-menu summon root; fi; gnome-control-center 2>/dev/null || systemsettings 2>/dev/null || xfce4-settings-manager 2>/dev/null"
     ],
     "detail": ""
   },
