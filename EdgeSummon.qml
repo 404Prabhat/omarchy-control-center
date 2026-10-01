@@ -16,6 +16,8 @@ PanelWindow {
   // physical top corners, above the bar, because that is where a hot-corner
   // gesture naturally lands.
   property int triggerSize: 12
+  property bool leftEnabled: true
+  property bool rightEnabled: true
   property int topInset: 0
   property int activationDelayMs: 120
 
@@ -36,14 +38,14 @@ PanelWindow {
     Region {
       x: 0
       y: edgeRoot.topInset
-      width: edgeRoot.triggerSize
-      height: edgeRoot.triggerSize
+      width: edgeRoot.leftEnabled ? edgeRoot.triggerSize : 0
+      height: edgeRoot.leftEnabled ? edgeRoot.triggerSize : 0
     }
     Region {
       x: edgeRoot.width - edgeRoot.triggerSize
       y: edgeRoot.topInset
-      width: edgeRoot.triggerSize
-      height: edgeRoot.triggerSize
+      width: edgeRoot.rightEnabled ? edgeRoot.triggerSize : 0
+      height: edgeRoot.rightEnabled ? edgeRoot.triggerSize : 0
     }
   }
 
@@ -65,9 +67,12 @@ PanelWindow {
     onTriggered: if (rightCorner.containsMouse && edgeRoot.owner) edgeRoot.owner.summonRight()
   }
 
-  // Hover-only: acceptedButtons None keeps the actual corner click-through.
+  // Hover-only. acceptedButtons None does not make the corner click-through:
+  // the compositor delivers every click inside the input region above to this
+  // layer, so a disabled corner is removed from the region instead.
   MouseArea {
     id: leftCorner
+    enabled: edgeRoot.leftEnabled
     x: 0
     y: edgeRoot.topInset
     width: edgeRoot.triggerSize
@@ -82,6 +87,7 @@ PanelWindow {
 
   MouseArea {
     id: rightCorner
+    enabled: edgeRoot.rightEnabled
     x: edgeRoot.width - edgeRoot.triggerSize
     y: edgeRoot.topInset
     width: edgeRoot.triggerSize
